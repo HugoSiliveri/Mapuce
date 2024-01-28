@@ -1,0 +1,19 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+    <div class="form affichage">
+        <div class="listes">
+            <h3>Listes des utilisateurs</h3>
+            <ul>
+                {% for utilisateur in utilisateurs %}
+                    <li>
+                        {{ utilisateur.getLogin }}
+                        <a href="{{ route("afficherFormulaireMiseAJour", {"idUser" : utilisateur.getLogin}) }}">(Modifier)</a>
+                        <a href="{{ route("supprimeUtilisateur", {"idUser" : utilisateur.getLogin}) }}">(Supprimer)</a>
+                    </li>
+                {% endfor %}
+            </ul>
+            <a id="creation" href='{{ route("afficherFormulaireCreation") }}'>Créer un utilisateur</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block page_title %}Mapuce{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset("../ressources/css/navstyle.css") }}">
+    <link rel="icon" type="image/png" href="{{ asset("../ressources/img/Logo.png") }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+            crossorigin=""></script>
+    <script type="text/javascript" src="{{ asset("../ressources/js/menuBurger.js") }}" defer></script>
+    <script type="module" src="{{ asset("../ressources/js/autocomp-reactif.js") }}" defer></script>
+    <script type="text/javascript" src="{{ asset("../ressources/js/covoiturage.js") }}" defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">window.$crisp = [];
+        window.CRISP_WEBSITE_ID = "8a00b319-d09e-4bb0-97ec-f2e5ab594161";
+        (function () {
+            d = document;
+            s = d.createElement("script");
+            s.src = "https://client.crisp.chat/l.js";
+            s.async = 1;
+            d.getElementsByTagName("head")[0].appendChild(s);
+        })();</script>
+</head>
+<body>
+
+
+<div class="container">
+    <div class="top-layer"></div>
+    <div class="top-layer top-layer--2"></div>
+    <div class="top-layer top-layer--3"></div>
+    <div class="top-layer top-layer--4"></div>
+    <div class="top-layer top-layer--5"></div>
+    <div class="bottom-layer"></div>
+    <div class="bottom-layer bottom-layer--2"></div>
+    <div class="bottom-layer bottom-layer--3"></div>
+    <div class="left-layer"></div>
+    <div class="left-layer left-layer--2"></div>
+    <div class="left-layer left-layer--3"></div>
+    <div class="left-layer left-layer--4"></div>
+    <div class="right-layer"></div>
+    <div class="right-layer right-layer--2"></div>
+    <div class="right-layer right-layer--3"></div>
+</div>
+
+<header>
+
+    <nav id="nav">
+
+        <div id="menuBurger">
+            {% if connexionUtilisateur.getLoginUtilisateurConnecte %}
+                <div class="infos">
+                    <img alt="user" class="icone"
+                         src="{{ asset("../ressources/img/utilisateurs/" ~ connexionUtilisateur.getAvatarUtilisateurConnecte) }}">
+                    <div id="pseudo">
+                        <a href=" {{ route("afficheDetailUtilisateur", {"idUser" : connexionUtilisateur.getLoginUtilisateurConnecte }) }}">{{ connexionUtilisateur.getLoginUtilisateurConnecte }}</a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="infos">
+                    <img alt="user" class="icone"
+                         src="{{ asset("../ressources/img/utilisateurs/" ~ connexionUtilisateur.getAvatarUtilisateurConnecte) }}">
+                    <p>Anonyme</p>
+                </div>
+            {% endif %}
+            <div id="container">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+            </div>
+        </div>
+
+        <div id="sous_menu">
+            <div id="liste">
+                <div id="top" class="boutonContainer">
+                    <img alt="login" src=" {{ asset("../ressources/img/home.png") }}" width="18">
+                    <data value="{{ route("accueil") }}">Accueil</data>
+                </div>
+                {% if connexionUtilisateur.estAdministrateur %}
+                    <div id="right" class="boutonContainer">
+                        <img alt="login" src=" {{ asset("../ressources/img/utilisateurs/user.png") }}" width="18">
+                        <data value="{{ route("afficheListeUtilisateurs") }}">Utilisateurs</data>
+                    </div>
+                    <div id="right" class="boutonContainer">
+                        <img alt="login" src=" {{ asset("../ressources/img/city.png") }}" width="18">
+                        <data value="{{ route("afficheListeCommunes") }}">Communes</data>
+                    </div>
+                {% endif %}
+                {% if not connexionUtilisateur.getLoginUtilisateurConnecte %}
+                    <div id="left" class="boutonContainer">
+                        <img alt="login" src=" {{ asset("../ressources/img/register.png") }}" width="18">
+                        <data value="{{ route("afficherFormulaireCreation") }}">Inscription</data>
+                    </div>
+                    <div id="left" class="boutonContainer">
+                        <img alt="login" src=" {{ asset("../ressources/img/enter.png") }}" width="18">
+                        <data value="{{ route("afficherFormulaireConnexion") }}">Connexion</data>
+                    </div>
+                {% else %}
+                    <div id="bottom" class="boutonContainer">
+                        <img alt="logout" src="{{ asset("../ressources/img/update.png") }}" width="18">
+                        <data value="{{ route("afficherFormulaireMiseAJour", {"idUser" : connexionUtilisateur.getLoginUtilisateurConnecte}) }}">
+                            Modifier
+                        </data>
+                    </div>
+                    <div id="bottom" class="boutonContainer">
+                        <img alt="logout" src="{{ asset("../ressources/img/delete.png") }}" width="18">
+                        <data value="{{ route("supprimeUtilisateur", {"idUser" : connexionUtilisateur.getLoginUtilisateurConnecte}) }}">
+                            Supprimer
+                        </data>
+                    </div>
+                    <div class="boutonContainer">
+                        <img alt="logout" src="{{ asset("../ressources/img/logout.png") }}" width="18">
+                        <data value="{{ route("deconnexion") }}">Déconnexion</data>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    <div id="messagesFlash">
+        {% for type in ["success", "info", "warning", "danger"] %}
+            {% for message in messagesFlash.lireMessages(type) %}
+                <div class="alert alert-{{ type }}">{{ message }}</div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</header>
+
+<main>
+    {% block page_content %}{% endblock %}
+</main>
+
+</div>
+</body>
+</html>

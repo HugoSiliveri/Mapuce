@@ -1,0 +1,20 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+    <div class="form affichage">
+        <div class="listes">
+            <p>Noeud routier :</p>
+            <ul>
+                <li>
+                    gid = {{ noeudCommune.getGid }}
+                </li>
+                <li>
+                    id_rte = {{ noeudCommune.getId_rte500 }}
+                </li>
+                <li>
+                    nomCommune = {{ noeudCommune.getNomCommune }}
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

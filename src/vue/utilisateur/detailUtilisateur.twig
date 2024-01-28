@@ -1,0 +1,15 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+
+    <p>
+        Utilisateur {{ utilisateur.getPrenom }} {{ utilisateur.getNom }} de login {{ utilisateur.getLogin }}
+
+        {% if estUtilisateur(utilisateur.getLogin) or connexionUtilisateur.estAdministrateur %}
+            <a href="{{ route("afficherFormulaireMiseAJour", {"idUser" : utilisateur.getLogin}) }}">(mettre à
+                jour)</a>
+            <a href="{{ route("supprimeUtilisateur", {"idUser" : utilisateur.getLogin}) }}">(supprimer)</a>
+        {% endif %}
+    </p>
+
+{% endblock %}

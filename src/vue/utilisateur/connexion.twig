@@ -1,0 +1,24 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+    <div class="formulaire">
+        <form method="post" class="form" action="{{ route("connecter") }}">
+            <fieldset>
+                <div class="InputAddOn">
+                    <label class="InputAddOn-item" for="login_id">Login</label>
+                    <input class="fieldsetInput" type="text" value="" z name="login" id="login_id" required>
+                </div>
+                <div class="InputAddOn">
+                    <label class="InputAddOn-item" for="mdp_id">Mot de passe</label>
+                    <input class="fieldsetInput" type="password" value="" placeholder="" name="mdp" id="mdp_id"
+                           required>
+                </div>
+                <input type='hidden' name='action' value='connecter'>
+                <input type='hidden' name='controleur' value='utilisateur'>
+                <div class="boutonEnvoi">
+                    <input class="submit" type="submit" value="Envoyer"/>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

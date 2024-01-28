@@ -1,0 +1,61 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+    <div class="formulaire">
+        <form method="post" class="form" action="{{ route("miseAJour") }}" enctype="multipart/form-data">
+            <fieldset>
+                <p class="InputAddOn">
+                    <label class="InputAddOn-item" for="login_id">Login&#42;</label>
+                    <input class="fieldsetInput" type="text" value="{{ login }}" placeholder="Ex : rlebreton"
+                           name="login" id="login_id" readonly>
+                </p>
+                <p class="InputAddOn">
+                    <label class="InputAddOn-item" for="prenom_id">Prénom&#42;</label>
+                    <input class="fieldsetInput" type="text" value="{{ prenom }}" placeholder="Ex : Romain"
+                           name="prenom" id="prenom_id" required>
+                </p>
+                <p class="InputAddOn">
+                    <label class="InputAddOn-item" for="nom_id">Nom&#42;</label>
+                    <input class="fieldsetInput" type="text" value="{{ nom }}" placeholder="Ex : Lebreton"
+                           name="nom" id="nom_id" required>
+                </p>
+                <p class="InputAddOn">
+                    <label class="InputAddOn-item" for="email_id">Email&#42;</label>
+                    <input class="fieldsetInput" type="email" value="{{ email }}"
+                           placeholder="rlebreton@yopmail.com" name="email" id="email_id" required>
+                </p>
+                <p class="InputAddOn">
+                    <label class="InputAddOn-item" for="mdp_id">Ancien mot de passe&#42;</label>
+                    <input class="fieldsetInput" type="password" value="" placeholder="" name="mdpAncien" id="mdp_id"
+                           required>
+                </p>
+                <p class="InputAddOn">
+                    <label class="InputAddOn-item" for="mdp_id">Nouveau mot de passe&#42;</label>
+                    <input class="fieldsetInput" type="password" value="" placeholder="" name="mdp" id="mdp_id"
+                           required>
+                </p>
+                <p class="InputAddOn">
+                    <label class="InputAddOn-item" for="mdp2_id">Vérification du nouveau mot de passe&#42;</label>
+                    <input class="fieldsetInput" type="password" value="" placeholder="" name="mdp2" id="mdp2_id"
+                           required>
+                </p>
+                <div class="InputAddOn">
+                    <label class="InputAddOn-item" for="avatar_id">Photo de profil&#42;</label>
+                    <input required type="file" id="avatar_id" name="avatar" accept="image/png, image/jpeg">
+                </div>
+                {% if estAdmin2 %}
+                    <p class="InputAddOn">
+                        <label class="InputAddOn-item" for="estAdmin_id">Administrateur</label>
+                        <input class="InputAddOn-field" type="checkbox" placeholder="" name="estAdmin" id="estAdmin_id"
+                               {% if estAdmin2 %}checked{% endif %}>
+                    </p>
+                {% endif %}
+                <input type='hidden' name='action' value='mettreAJour'>
+                <input type='hidden' name='controleur' value='utilisateur'>
+                <div class="boutonEnvoi">
+                    <input class="submit" type="submit" value="Envoyer"/>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+{% endblock %}

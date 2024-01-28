@@ -1,0 +1,14 @@
+Le fichier concernant l'appel de l'API par requête AJAX est le fichier ressources/js/covoiturage.js. L'appel de ce script est dans le fichier vue/base.twig.
+
+
+Comme vous pourrez le constater, j'ai repris les promesses vues en TD de développement web pour envoyer une requête à l'API.
+Les captures d'écran API1 et API2 présentes dans ce dossier vous permettront de voir à quoi ressemble le texte au format JSON retourné.
+En particulier, sur API2, vous pourrez voir l'attribut ville que j'essaye d'afficher dans la console avec la fonction requeteCovoiturage().
+Sauf qu'ici, une erreur indiquant une syntaxe JSON invalide m'est retournée (que vous pourrez observer dans l'image nommée "erreur").
+L'erreur s'affiche plusieurs fois car la requête est censée retourner 10 lignes d'après la documentation de l'API.
+Je ne comprends absolument pas d'où cette erreur peut venir. Je m'en remets donc à vous pour me débloquer sur ce point.
+Ici, j'essaye simplement d'afficher des villes dans la console pour faire des tests, mais pour préciser ce que je veux faire à terme avec cette API :
+comme je l'avais dit lors de la dernière réunion, mon objectif principal serait de pouvoir afficher toutes les aires de covoiturage sur une page, les afficher sur une carte, et pouvoir calculer des trajets entre deux aires.
+(d'ailleurs, vous pourrez constater que j'ai commmenté une ligne dans le corps de la fonction qui est censée afficher toutes les villes dans vue/noeudcommune/covoiturage.twig)
+
+En vous remerciant d'avance.

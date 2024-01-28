@@ -1,0 +1,17 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+    <div class="form affichage">
+        <div class="listes">
+            <h3>Liste des noeuds communes</h3>
+            <ul>
+                {% for noeudCommune in noeudsCommunes %}
+                    <li>
+                        {{ noeudCommune.nomCommune }}
+                        <a href="{{ route("afficheDetailsNoeud", {"gid" : noeudCommune.getGid}) }}">(Détail)</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}

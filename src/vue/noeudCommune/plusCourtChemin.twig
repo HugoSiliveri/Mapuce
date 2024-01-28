@@ -1,0 +1,148 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+
+    {% if connexionUtilisateur.estConnecte %}
+        <button id="favoris" class="btn blue">+</button>
+    {% else %}
+        <button id="favoris" class="btn blue" disabled>+</button>
+    {% endif %}
+
+    <button id="localisation" class="btn blue">POS</button>
+
+
+    <a href="#" id="menu-button" class="arrow right"></a>
+    <!-- Fenêtre modale -->
+    <div id="wrapper">
+        <div id="modal" class="modal"></div>
+        <div id="modal-content">
+            <div id="sous-menu-infos">
+                <div id="infos-menu-deroulant">
+                    <img src="{{ asset("../ressources/img/Logo.png") }}" width="32" height="32" alt="logo">
+                    <div id="titre"><p>MAP</p>
+                        <p>UCE</p></div>
+                </div>
+                <span id="close">&times;</span>
+            </div>
+            <div id="plusCourtChemin">
+                <form id="formPlusCourtChemin" action="{{ route("plusCourtCheminPOST") }}" method="post">
+                    <fieldset id="villes">
+                        <p class="fieldsetP">
+                            <label for="nomCommuneDepart_id"></label>
+                            <input class="fieldsetInputPCC" type="text" data-inputfun="autocompDepart.requeteAJAX()"
+                                   placeholder="Commune de départ"
+                                   name="nomCommuneDepart"
+                                   id="nomCommuneDepart_id" required>
+                        <div id="autocompletionVilleDepart" data-inputfun="autocompDepart.requeteAJAX()"
+                             data-htmlvar="autocompDepart.suggestions_str"></div>
+                        </p>
+                        <p class="fieldsetP">
+                            <label for="nomCommuneArrivee_id"></label>
+                            <input class="fieldsetInputPCC" type="text" data-inputfun="autocompArrivee.requeteAJAX()"
+                                   placeholder="Commune d'arrivée"
+                                   name="nomCommuneArrivee"
+                                   id="nomCommuneArrivee_id" required>
+                        <div id="autocompletionVilleArrivee" data-inputfun="autocompArrivee.requeteAJAX()"
+                             data-htmlvar="autocompArrivee.suggestions_str"></div>
+                        </p>
+                        {% if connexionUtilisateur.estConnecte %}
+                            <select name="heuristique" id="selectH">
+                                <option value="Haversine">Choisissez une préférence</option>
+                                <option value="Haversine">Résultat très précis</option>
+                                <option value="Loxodromique">Résultat très rapide</option>
+                                <option value="Euclidienne">Résultat plutot précis et plutot rapide</option>
+                            </select>
+                            {% if connexionUtilisateur.estAdministrateur %}
+                                <div class="reset">
+                                    <input name="modeDebug" type="checkbox" id="debug" value="true">
+                                    <label id="labelDebug" for="debug">Mode debogage</label>
+                                </div>
+                            {% else %}
+                                <input name="modeDebug" type="hidden" id="debug" value="false">
+                            {% endif %}
+                        {% else %}
+                            <input type="hidden" name="heuristique" id="selectH" value="Haversine">
+                            <input name="modeDebug" type="hidden" id="debug" value="false">
+                        {% endif %}
+                        <input type="hidden" name="XDEBUG_TRIGGER">
+                        <div id="modifItineraire">
+                            <input id="ajouterVille" class="submit2" value="Ajouter" type="button">
+                            <input id="RetirerVille" class="submit2" value="Retirer" type="button">
+                        </div>
+                        <div class="reset">
+                            <input name="modeCheat" type="checkbox" id="cheat" value="false">
+                            <label id="labelCheat" for="cheat">Mode cheat</label>
+                        </div>
+
+                        <div class="reset">
+                            <input name="traficRoutier" type="checkbox" id="trafic" value="false">
+                            <label id="traficRoutier" for="trafic">Afficher trafic routier</label>
+                        </div>
+
+                        <p class="boutonEnvoi">
+                            <input id="calculer" class="submit2" value="Calculer" type="button">
+                        </p>
+                    </fieldset>
+                </form>
+
+                <data value="0" id="nombreVilles">
+                    {#                <div id="loader"> #}
+                    {#                    <div class="spinner"></div> #}
+                    {#                    <p>Chargement en cours...</p> #}
+                    {#                </div> #}
+                    {#                <script type="text/javascript" src="{{ asset("../ressources/js/loading.js") }}"></script> #}
+                    {% if connexionUtilisateur.estConnecte %}
+                        <div id="container-roll">
+                            <p class="titleSide">Mes trajets</p>
+                            <button id="mon-bouton">▼</button>
+                            <div id="ma-div">
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div id="faq">
+                        <div id="right" class="boutonContainer">
+                            <data value="{{ route("afficherFAQ") }}">FAQ</data>
+                        </div>
+                    </div>
+
+                </data>
+            </div>
+        </div>
+    </div>
+
+    {% if post %}
+        <data id="data" value="{{ jsonEncode(donnees) }}">
+            <data id="troncons" value="{{ jsonEncode(troncons) }}">
+                {% if debugChemin %}
+                <data id="debugPath" value="{{ jsonEncode(debugChemin) }}">
+                    {% endif %}
+                    <div id="resultat">
+                        <div id="trajet">
+                            <div id="trajet2">{{ nomCommuneDepart }} - {{ nomCommuneArrivee }}</div>
+                            <p id="distance">{{ distance }}km</p>
+                        </div>
+                        <div id="temps">
+                            {% if heures == '0' %}
+                                {{ minutes }}min
+                            {% else %}
+                                {{ heures }}h {{ minutes }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </data>
+            </data>
+        </data>
+    {% endif %}
+    <div id="affichageCarte">
+
+        <script type="text/javascript" src="{{ asset("../ressources/js/leaflet.js") }}" defer></script>
+        <script type="text/javascript" src="{{ asset("../ressources/js/selection.js") }}" defer></script>
+        <script type="text/javascript" src="{{ asset("../ressources/js/trajetsFavoris.js") }}" defer></script>
+        <script type="text/javascript" src="{{ asset("../ressources/js/gestionVilles.js") }}" defer></script>
+        <div id="map"></div>
+    </div>
+
+{% endblock %}
+
+
+

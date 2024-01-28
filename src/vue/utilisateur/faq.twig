@@ -1,0 +1,64 @@
+{% extends "base.twig" %}
+
+{% block page_content %}
+
+    <div id="conteneur">
+        <h2>Questions fréquemment posées !</h2>
+        <div class="accordion">
+            <div class="accordion-item">
+                <button id="accordion-button-1" aria-expanded="false"><span class="accordion-title">Comment puis-je m'inscrire ?</span><span
+                            class="icon" aria-hidden="true"></span></button>
+                <div class="accordion-content">
+                    <p>Vous souhaitez vous inscrire sur notre site web afin de pouvoir profiter de nouvelles
+                        fonctionnalités ? Pour cela rien de plus simple, il suffit de cliquer sur le menu situé en haut
+                        à droite de votre écran, une fois déroulée, vous pouvez cliquer sur "<B>Inscription</B>" !</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button id="accordion-button-2" aria-expanded="false"><span class="accordion-title">Comment puis-je me connecter ?</span><span
+                            class="icon" aria-hidden="true"></span></button>
+                <div class="accordion-content">
+                    <p>Pour se connecter, il suffit de cliquer sur le menu situé en haut à droite de votre écran, une
+                        fois déroulée sélectionnez simplement "<B>Connexion</B>".</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button id="accordion-button-3" aria-expanded="false"><span class="accordion-title">Est-il possible de changer mon mot de passe si je l'oublie ?</span><span
+                            class="icon" aria-hidden="true"></span></button>
+                <div class="accordion-content">
+                    <p>Pour l'instant non... Néanmoins si vous rencontrer de telles difficultés n'hésitez pas à utiliser
+                        le chat bot intégré au site web, un membre de l'équipe technique vous aidera volontiers. Pour ce
+                        faire, vous pouvez cliquer sur l'icône de message en bas à droite de votre écran afin de
+                        démarrer une discussion.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button id="accordion-button-4" aria-expanded="false"><span class="accordion-title">L'application fonctionne telle avec des villes d'autres pays ?</span><span
+                            class="icon" aria-hidden="true"></span></button>
+                <div class="accordion-content">
+                    <p>Malheureusement, notre application ne fonctionne qu'avec les villes de France pour l'instant.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button id="accordion-button-5" aria-expanded="false"><span class="accordion-title">Ai-je besoin de payer pour accéder à toutes les fonctionnalités ?</span><span
+                            class="icon" aria-hidden="true"></span></button>
+                <div class="accordion-content">
+                    <p>La réponse est non ! Toutes les fonctionnalités sur le site web sont complètement gratuites.</p>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <button id="accordion-button-6" aria-expanded="false"><span class="accordion-title">Le site ne me calcule plus le plus court chemin comment faire ?</span><span
+                            class="icon" aria-hidden="true"></span></button>
+                <div class="accordion-content">
+                    <p>Il arrive parfois que le site n'arrive pas à calculer le trajet lorsque celui-ci est trop long.
+                        Dans le cas contraire, le problème le plus fréquent est une surcharge du nombre de requêtes
+                        envoyés, dans ce cas-là, nous vous conseillons de contacter le support à l'aide du petit chat
+                        bot situé en bas à droite de votre écran !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="{{ asset("../ressources/js/faq.js") }}" defer></script>
+
+{% endblock %}
